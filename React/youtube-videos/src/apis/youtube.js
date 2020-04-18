@@ -1,6 +1,8 @@
 import axios from 'axios';
 
-import API_KEY from './config'
+import {API_KEY} from './config'; //API_KEY is private
+
+console.log(API_KEY);
 
 export default axios.create({
   baseURL: 'https://www.googleapis.com/youtube/v3',
@@ -10,3 +12,4 @@ export default axios.create({
     key: API_KEY
   }
 });
+
