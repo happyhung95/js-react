@@ -1,6 +1,6 @@
 This is a repository of Hung Nguyen
 
-All projects are study projects from online platforms. They are not 100% of my original code.
+All projects are study projects from online platforms. They are not 100% of my original code, I coded along the instructions.
 
 It shows what I have learnt.
 
