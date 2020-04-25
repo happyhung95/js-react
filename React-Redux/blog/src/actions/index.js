@@ -10,13 +10,11 @@ export const fetchPostsAndUsers = () => async (dispatch, getState) => {
   userIds.forEach((id) => dispatch(fetchUser(id))); 
   */
 
-  _.chain(
-    getState()
-      .posts.map("userID")
-      .uniq()
-      .forEach((id) => dispatch(fetchUser(id)))
-      .value()
-  );
+  _.chain(getState().posts)
+    .map("userId")
+    .uniq()
+    .forEach((id) => dispatch(fetchUser(id)))
+    .value();
 };
 
 //Bad approach! Need to use middleware (Redux Thunk) instead
@@ -59,3 +57,25 @@ const _fetchUser = _.memoize(async (id, dispatch) => {
 
   dispatch({ type: "FETCH_USER", payload: response.data });
 }); */
+
+// EXTRA! I do this myself
+
+/* export const fetchAlbum; */
+
+export const fetchAlbums = () => async (dispatch) => {
+  const response = await jsonPlaceholder.get("/albums");
+
+  dispatch({ type: "FETCH_ALBUMS", payload: response.data });
+};
+
+export const fetchPhotos = (albumId) => async (dispatch,getState) => {
+  const response = await jsonPlaceholder.get("/photos", {
+    params: {
+      albumId: `${albumId}`,
+    },
+  });
+  setTimeout(console.log(getState()), 3000);
+  const album = {};
+  album[albumId] = response.data;
+  dispatch({ type: "FETCH_PHOTOS", payload: album});
+};
