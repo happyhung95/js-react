@@ -9,34 +9,51 @@ class AlbumList extends React.Component {
     this.props.fetchAlbums();
   }
 
-  renderList() {
-    return this.props.albums.map((album) => {
-      return (
-        <div className="item" key={album.id}>
-          <div className="content">
-            <div className="description">
+  renderUserSection() {
+    return this.props.users.map((user) => {
+      const albumArray = this.props.albums.filter(
+        (album) => album.userId === user.id
+      );
+      
+      const renderList = () => {
+        return albumArray.map((album) => {
+          return (
+            <div className="ui description">
               <button
-                className="ui button"
+                key={album.id}
+                className="fluid ui button"
                 onClick={() => this.props.fetchPhotos(album.id)}
               >
                 {album.title}
               </button>
               <PhotoList albumId={album.id} />
-              <UserHeader userId={album.userId} />
+            </div>
+          );
+        });
+      };
+
+      return (
+        <div className="item" key={user.id}>
+          <div className="content">
+            <div className="header">
+              <UserHeader userId={user.id} />
+              {renderList()}
             </div>
           </div>
         </div>
       );
     });
-  }
+  };
 
   render() {
-    return <div className="ui relaxed divided list">{this.renderList()}</div>;
+    return <div className="ui relaxed divided list">{this.renderUserSection()}</div>;
   }
 }
 
 const mapStateToProps = (state) => {
-  return { albums: state.albums };
+  return { albums: state.albums, users: state.users };
 };
 
-export default connect(mapStateToProps, { fetchAlbums, fetchPhotos })(AlbumList);
+export default connect(mapStateToProps, { fetchAlbums, fetchPhotos })(
+  AlbumList
+);

@@ -58,6 +58,9 @@ const _fetchUser = _.memoize(async (id, dispatch) => {
   dispatch({ type: "FETCH_USER", payload: response.data });
 }); */
 
+
+
+
 // EXTRA! I do this myself
 
 /* export const fetchAlbum; */
@@ -74,7 +77,6 @@ export const fetchPhotos = (albumId) => async (dispatch,getState) => {
       albumId: `${albumId}`,
     },
   });
-  setTimeout(console.log(getState()), 3000);
   const album = {};
   album[albumId] = response.data;
   dispatch({ type: "FETCH_PHOTOS", payload: album});
